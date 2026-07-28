@@ -257,6 +257,20 @@ article.post { padding: 3rem 0 2rem; }
 
 .post p + p { margin-top: 1.35rem; }
 
+.post ol {
+  margin: 1.35rem 0 1.35rem 1.5rem;
+}
+
+.post ol li { padding-left: 0.35rem; }
+
+.post ol li + li { margin-top: 0.5rem; }
+
+.post ol li::marker {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--amber);
+}
+
 .post em { color: var(--dust); }
 
 .post .end-mark {
