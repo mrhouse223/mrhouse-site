@@ -1,0 +1,329 @@
+/* ——— Mr. House — desert-deco token system ——— */
+
+:root {
+  --night: #17132b;      /* page background: high-desert night */
+  --felt: #201a3d;       /* raised surfaces */
+  --paper: #f3eada;      /* primary text: warm paper */
+  --dust: #a89cc9;       /* secondary text: dusk lavender */
+  --amber: #ffb640;      /* neon marquee amber */
+  --amber-soft: rgba(255, 182, 64, 0.35);
+  --rose: #ff7a9e;       /* secondary neon: sign rose */
+  --line: rgba(243, 234, 218, 0.16);
+
+  --font-display: "Limelight", "Georgia", serif;
+  --font-body: "Source Serif 4", "Georgia", serif;
+  --font-mono: "Spline Sans Mono", "Menlo", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--night);
+  background-image: radial-gradient(
+    ellipse 120% 60% at 50% -10%,
+    #241c49 0%,
+    var(--night) 65%
+  );
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+a:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--amber); color: var(--night); }
+
+.wrap {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ——— Masthead: the marquee ——— */
+
+.marquee {
+  position: relative;
+  text-align: center;
+  padding: 5.5rem 1.25rem 3.25rem;
+  overflow: hidden;
+}
+
+/* sunburst rays behind the sign */
+.marquee::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% 0;
+  background: repeating-conic-gradient(
+    from -90deg at 50% 62%,
+    rgba(255, 182, 64, 0.07) 0deg 4deg,
+    transparent 4deg 12deg
+  );
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 55%, #000 20%, transparent 72%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 55%, #000 20%, transparent 72%);
+  pointer-events: none;
+}
+
+.marquee > * { position: relative; }
+
+.marquee .est {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+.marquee h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.9rem, 10vw, 5.75rem);
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+  margin: 1.1rem 0 0.4rem;
+  color: var(--amber);
+  text-shadow:
+    0 0 18px var(--amber-soft),
+    0 0 60px rgba(255, 182, 64, 0.18);
+  animation: neon-on 1.6s ease-out both;
+}
+
+.marquee h1 a { text-decoration: none; }
+
+.marquee .tagline {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--paper);
+}
+
+.marquee .deco-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1.6rem auto 0;
+  max-width: 22rem;
+  color: var(--rose);
+}
+
+.marquee .deco-rule::before,
+.marquee .deco-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to var(--dir, right), transparent, var(--line));
+}
+
+.marquee .deco-rule::before { --dir: right; }
+.marquee .deco-rule::after { --dir: left; }
+
+@keyframes neon-on {
+  0% { opacity: 0; text-shadow: none; }
+  8% { opacity: 1; }
+  14% { opacity: 0.3; }
+  22% { opacity: 1; }
+  27% { opacity: 0.45; text-shadow: none; }
+  38% { opacity: 1; }
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 18px var(--amber-soft),
+      0 0 60px rgba(255, 182, 64, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee h1 { animation: none; }
+}
+
+/* ——— Intro ——— */
+
+.intro {
+  text-align: center;
+  color: var(--dust);
+  max-width: 34rem;
+  margin: 0 auto 4.5rem;
+  padding: 0 1.25rem;
+}
+
+/* ——— The ledger: essay list ——— */
+
+.ledger { padding-bottom: 3rem; }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--rose);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+}
+
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.entry {
+  display: block;
+  text-decoration: none;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.entry:first-of-type { border-top: 1px solid var(--line); }
+
+.entry .meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+.entry .meta .tag { color: var(--rose); }
+
+.entry h2 {
+  font-weight: 600;
+  font-size: 1.45rem;
+  line-height: 1.3;
+  margin: 0.45rem 0 0.35rem;
+  transition: color 160ms ease, text-shadow 160ms ease;
+}
+
+.entry:hover h2,
+.entry:focus-visible h2 {
+  color: var(--amber);
+  text-shadow: 0 0 24px rgba(255, 182, 64, 0.25);
+}
+
+.entry .dek {
+  color: var(--dust);
+  font-size: 0.98rem;
+}
+
+/* ——— Post pages ——— */
+
+.post-marquee {
+  text-align: center;
+  padding: 2.75rem 1.25rem 0;
+}
+
+.post-marquee .home {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: var(--amber);
+  text-decoration: none;
+  text-shadow: 0 0 14px var(--amber-soft);
+}
+
+article.post { padding: 3rem 0 2rem; }
+
+.post header { margin-bottom: 2.5rem; }
+
+.post .meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+.post .meta .tag { color: var(--rose); }
+
+.post h1 {
+  font-weight: 600;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  margin: 0.6rem 0 0;
+}
+
+.post p + p { margin-top: 1.35rem; }
+
+.post em { color: var(--dust); }
+
+.post .end-mark {
+  text-align: center;
+  color: var(--rose);
+  margin-top: 3rem;
+  font-size: 1.1rem;
+}
+
+.post-nav {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.post-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dust);
+  text-decoration: none;
+}
+
+.post-nav a:hover { color: var(--amber); }
+
+/* ——— The proprietor: about ——— */
+
+.proprietor {
+  margin: 3.5rem 0;
+  padding: 2rem;
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line);
+  outline-offset: 4px;
+}
+
+.proprietor p { color: var(--dust); }
+
+.proprietor p strong { color: var(--paper); font-weight: 600; }
+
+/* ——— Footer ——— */
+
+footer {
+  text-align: center;
+  padding: 2rem 1.25rem 3.5rem;
+  color: var(--dust);
+}
+
+footer .links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+footer .links a { text-decoration: none; color: var(--dust); transition: color 160ms ease; }
+
+footer .links a:hover { color: var(--amber); }
+
+footer .colophon { font-size: 0.85rem; font-style: italic; }
+
+@media (max-width: 480px) {
+  .marquee { padding-top: 3.5rem; }
+  footer .links { gap: 1.1rem; flex-wrap: wrap; }
+  .proprietor { padding: 1.4rem; }
+}
